@@ -1,12 +1,24 @@
 import 'dotenv/config';
-import {drizzle} from 'drizzle-orm/neon-http';
-import {neon} from '@neondatabase/serverless'
+// import {drizzle} from 'drizzle-orm/neon-http';
+// import {neon} from '@neondatabase/serverless'
 
-import * as schema from '../db/schema';
+import * as schema from '@/db/schema';
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Client } from "pg";
 
-const sql=neon(process.env.DATABASE_URL!);
+const client = new Client({
+  host: "127.0.0.1",
+  port: 5432,
+  user: "postgres",
+  password: "1234",
+  database: "fq",
+});
+client.connect();
+const db = drizzle(client,{schema});
 
-const db=drizzle(sql,{schema})
+// const sql=neon(process.env.DATABASE_URL!);
+
+// const db=drizzle(sql,{schema})
 
 const main=async()=>{
     try{
@@ -19,6 +31,7 @@ const main=async()=>{
         await db.delete(schema.challenges)
         await db.delete(schema.challengeOptions)
         await db.delete(schema.challengeProgress)
+        await db.delete(schema.userSubscription)
 
         console.log('Resetting finished')
     }catch(error){

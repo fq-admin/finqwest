@@ -9,7 +9,7 @@ export const GET = async (
    {params}: {params: { courseId: number }}
 ) => {
    if(!isAdmin()){
-      return new NextResponse('Unauthorized',{status:401})
+      return new NextResponse('Unauthorized',{status:403})
    }
 
    const data = await db.query.courses.findFirst({
@@ -24,7 +24,7 @@ export const PUT = async (
    {params}: {params: { courseId: number }}
 ) => {
    if(!isAdmin()){
-      return new NextResponse('Unauthorized',{status:401})
+      return new NextResponse('Unauthorized',{status:403})
    }
 
    const body = await req.json()
@@ -40,7 +40,7 @@ export const DELETE = async (
    {params}: {params: { courseId: number }}
 ) => {
    if(!isAdmin()){
-      return new NextResponse('Unauthorized',{status:401})
+      return new NextResponse('Unauthorized',{status:403})
    }
 
    const data=await db.delete(courses).where(eq(courses.id,params.courseId)).returning()

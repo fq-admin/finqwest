@@ -6,8 +6,7 @@ import Image from "next/image";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import {createStripeUrl} from '@/actions/user-subscription'
-
-const POINTS_TO_REFILL=10;
+import { POINTS_TO_REFILL } from "@/constants";
 
 type Props={
    hearts:number;
@@ -95,9 +94,9 @@ export const Items=({
                </div>
                <Button 
                   onClick={onUpgrade}
-                  disabled={pending||hasActiveSubscription}
+                  disabled={pending}
                >
-                  {hasActiveSubscription?'active':'upgrade'}
+                  {hasActiveSubscription?'settings':'upgrade'}
                </Button>
          </div>
       </ul>
